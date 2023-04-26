@@ -131,7 +131,6 @@ class Calculator(QWidget):
             if self.num_2 == 0.0:
                 self.input.setText("Error: ZeroDivision")
                 return 0
-            print(self.num_1, self.num_2)
             result = (self.num_1 / self.num_2)
         if float(int(result)) == result:
             result = int(result)
