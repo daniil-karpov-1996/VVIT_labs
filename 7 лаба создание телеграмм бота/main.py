@@ -16,7 +16,8 @@ times = ['9:30-11:05', '11:20-12:55', '13:10-14:45', '15:25-17:00', '17:15-18:50
 
 
 def show_timetable(message, day):
-    subjects = {"9:30": "Нет пары", "11:20": "Нет пары", "13:10": "Нет пары", "15:25": "Нет пары", "17:15": "Нет пары"}
+    subjects = {"9:30": "<Нет пары>", "11:20": "<Нет пары>", "13:10": "<Нет пары>", "15:25": "<Нет пары>",
+                "17:15": "<Нет пары>"}
     cursor.execute("SELECT * FROM timetable WHERE day=%s", (str(day),))
     records = list(cursor.fetchall())
     for i in records:
@@ -25,11 +26,11 @@ def show_timetable(message, day):
         teacher = records[0][1]
         subjects[i[4]] = i[2] + "\n" + i[3] + '\n' + teacher
     bot.send_message(message.chat.id, days[int(day.split('.')[1]) - 1])
-    bot.send_message(message.chat.id, '----------------------')
+    bot.send_message(message.chat.id, '_______________________')
     for i in range(1, 6):
-        bot.send_message(message.chat.id, str(i) + '. ' + times[i - 1])
-        bot.send_message(message.chat.id, subjects[times[i - 1].split('-')[0]])
-    bot.send_message(message.chat.id, '----------------------')
+        text = str(i) + '. ' + times[i - 1] + '\n' + subjects[times[i - 1].split('-')[0]]
+        bot.send_message(message.chat.id, text)
+    bot.send_message(message.chat.id, '_______________________')
 
 
 @bot.message_handler(commands=['start'])
